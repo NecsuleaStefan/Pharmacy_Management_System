@@ -1,0 +1,36 @@
+name: Qt Windows Build
+
+# This tells GitHub to run this file automatically whenever you push code 
+# to the main branch or open a Pull Request.
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    # We are using a Windows cloud server since your app is for Windows 10/11
+    runs-on: windows-latest
+
+    steps:
+    # 1. Download your code from GitHub onto the cloud server
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # 2. Install Qt and the MinGW compiler on the cloud server
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '6.10.2'        # Adjust this if you are using Qt 5
+        host: 'windows'
+        target: 'desktop'
+        arch: 'win64_mingw'
+
+    # 3. Create a build folder, run qmake on your Master project, and compile!
+    - name: Compile Pharmacy System
+      run: |
+        mkdir build
+        cd build
+        qmake ..\Pharmacy_Management_System.pro
+        mingw32-make
