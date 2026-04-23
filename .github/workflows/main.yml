@@ -24,9 +24,11 @@ jobs:
         host: 'windows'
         target: 'desktop'
         arch: 'win64_mingw'
+        
 
     - name: Compile Pharmacy System
       run: |
+        
         mkdir build
         cd build
         qmake ..\Pharmacy_Management_System.pro
