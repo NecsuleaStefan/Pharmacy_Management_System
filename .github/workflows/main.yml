@@ -29,7 +29,9 @@ jobs:
     - name: Compile Pharmacy System
       run: |
         
-        mkdir build
-        cd build
-        qmake ..\Pharmacy_Management_System.pro
+        mkdir build   
+        qmake Pharmacy_Management_System.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" 
+        ls ./build
+        mingw32-make -f ./build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/Makefile qmake_all
+        
         
