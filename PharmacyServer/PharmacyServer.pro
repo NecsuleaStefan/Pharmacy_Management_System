@@ -1,5 +1,9 @@
 QT += widgets
 QMAKE_LFLAGS += -municode
+win32 {
+    CONFIG -= qtmain
+    QMAKE_LFLAGS += -Wl,--allow-multiple-definition
+}
 CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
