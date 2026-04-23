@@ -32,4 +32,4 @@ jobs:
         mkdir build
         cd build
         qmake ..\Pharmacy_Management_System.pro
-        mingw32-make
+        
