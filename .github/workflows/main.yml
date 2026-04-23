@@ -1,0 +1,33 @@
+name: Qt Windows Build
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+   
+    runs-on: windows-latest
+
+    steps:
+
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '6.10.2'        
+        host: 'windows'
+        target: 'desktop'
+        arch: 'win64_mingw'
+
+    - name: Compile Pharmacy System
+      run: |
+        mkdir build
+        cd build
+        qmake ..\Pharmacy_Management_System.pro
+        mingw32-make
