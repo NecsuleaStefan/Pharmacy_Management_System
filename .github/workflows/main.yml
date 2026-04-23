@@ -23,10 +23,12 @@ jobs:
         version: '6.10.2'        
         host: 'windows'
         target: 'desktop'
-        arch: 'win64_msvc2022_64'
+        arch: 'win64_mingw'
+        tools: 'tools_mingw'
 
     - name: Compile Pharmacy System
       run: |
+        $env:PATH = ($env:PATH -split ';' | Where-Object { $_ -notmatch 'C:\\mingw64' }) -join ';'
         mkdir build
         cd build
         qmake ..\Pharmacy_Management_System.pro
