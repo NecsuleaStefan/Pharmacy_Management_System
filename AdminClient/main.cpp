@@ -5,7 +5,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    int b=12;
+    int b=13;
     MainWindow w;
     w.show();
     return QCoreApplication::exec();
