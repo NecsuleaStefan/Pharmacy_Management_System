@@ -20,16 +20,26 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v3
       with:
-        version: '6.10.2'        
+        version: '6.8.0'        
         host: 'windows'
         target: 'desktop'
         arch: 'win64_mingw'
         tools: 'tools_mingw1310,qt.tools.win64_mingw1310'
-        
+        cache: 'false'
         
 
     - name: Compile Pharmacy System
       run: |
+        # 1. Search the cloud computer to find exactly where Qt installed its matching tools
+        $qtTools = Get-ChildItem -Path "D:\a" -Filter "mingw32-make.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+        
+        # 2. Tell Windows to put Qt's tools at the very front of the line
+        $env:PATH = "$($qtTools.DirectoryName);" + $env:PATH
+        
+        # 3. Now it is safe to hide GitHub's default compiler so they don't fight!
+        $env:PATH = ($env:PATH -split ';' | Where-Object { $_ -notmatch 'C:\\mingw64' }) -join ';'
+        
+        # 4. Build the application!
         mkdir -Force build
         cd build
         qmake ..\Pharmacy_Management_System.pro
