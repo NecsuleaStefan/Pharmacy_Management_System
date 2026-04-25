@@ -24,7 +24,7 @@ jobs:
         host: 'windows'
         target: 'desktop'
         arch: 'win64_mingw'
-        tools: 'tools_mingw'
+        tools: 'tools_mingw,qt.tools.win64_mingw1120'
         
 
     - name: Compile Pharmacy System
