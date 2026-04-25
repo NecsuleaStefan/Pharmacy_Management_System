@@ -9,7 +9,7 @@ on:
 jobs:
   build:
    
-    runs-on: windows-2022
+    runs-on: windows-latest
 
     steps:
 
@@ -24,7 +24,7 @@ jobs:
         host: 'windows'
         target: 'desktop'
         arch: 'win64_mingw'
-        tools: 'tools_mingw90,qt.tools.win64_mingw900'
+        tools: 'tools_mingw,qt.tools.win64_mingw1310'
         
 
     - name: Compile Pharmacy System
