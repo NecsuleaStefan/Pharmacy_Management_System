@@ -41,7 +41,7 @@ jobs:
         # 4. Build the application!
         mkdir -Force build
         cd build
-        qmake ..\PharmacyMaster.pro
+        qmake ..\Pharmacy_Management_System.pro
         mingw32-make
         
         
