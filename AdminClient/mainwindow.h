@@ -23,7 +23,10 @@ private slots:
     void on_btnRefresh_clicked();
     void on_btnDeleteEmployee_clicked();
     void on_btnEditEmployee_clicked();
-    void handleServerResponse(const QString &message);
+
+    void refreshEmployeeTable(const QJsonArray &employees);
+    void showSuccessMessage(const QString &message);
+    void showErrorMessage(const QString &message);
 
 private:
     Ui::MainWindow *ui;

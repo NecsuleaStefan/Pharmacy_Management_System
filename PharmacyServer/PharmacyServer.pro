@@ -15,12 +15,14 @@ SOURCES += \
     databasemanager.cpp \
     main.cpp \
     mainwindow.cpp \
-    networkserver.cpp
+    networkserver.cpp \
+    requestrouter.cpp
 
 HEADERS += \
     databasemanager.h \
     mainwindow.h \
-    networkserver.h
+    networkserver.h \
+    requestrouter.h
 
 FORMS += \
     mainwindow.ui

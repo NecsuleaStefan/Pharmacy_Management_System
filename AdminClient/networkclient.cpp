@@ -1,5 +1,9 @@
 #include "networkclient.h"
+#include "qjsonarray.h"
 #include <QObject>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QJsonParseError>
 #include <QTcpSocket>
 
 NetworkClient::NetworkClient(QObject *parent) : QObject{parent}
@@ -37,12 +41,79 @@ void NetworkClient::sendMessage(const QString &message)
 
 void NetworkClient::onReadyRead()
 {
-    // Read the reply from the server
     QByteArray data = socket->readAll();
-    QString reply = QString::fromUtf8(data);
 
-    qDebug() << "[CLIENT RX] Server says:" << reply;
+    QJsonParseError parseError;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &parseError);
 
-    // Broadcast this out to the rest of the app (like the UI)
-    emit messageReceived(reply);
+    if (parseError.error != QJsonParseError::NoError) {
+        qDebug() << "[CLIENT ERROR] Failed to parse server response:" << parseError.errorString();
+        return;
+    }
+
+    QJsonObject response = doc.object();
+    QString action = response["action"].toString();
+    QString status = response["status"].toString();
+    QString message = response["message"].toString();
+
+    qDebug() << "[CLIENT RX] Action:" << action << "| Status:" << status;
+
+    // Route the response to the correct Qt Signal
+    if (action == "login_response") {
+        if (status == "success") {
+            emit loginSuccess(response["role"].toString());
+        } else {
+            emit loginFailed(message);
+        }
+    }
+    else if (action == "employee_list") {
+        emit employeeListReceived(response["employees"].toArray());
+    }
+    else {
+        // If it's not a login or a list, it's a generic action (add/edit/delete)
+        if (status == "success") {
+            emit actionSuccess(message);
+        } else if (status == "error") {
+            emit actionFailed(message);
+        }
+    }
+}
+
+void NetworkClient::sendLoginRequest(const QString &username, const QString &password) {
+    QJsonObject request;
+    request["action"] = "login_attempt";
+    request["username"] = username;
+    request["password"] = password;
+    sendMessage(QJsonDocument(request).toJson(QJsonDocument::Compact));
+}
+
+void NetworkClient::sendAddEmployeeRequest(const QString &name, const QString &role, const QString &email) {
+    QJsonObject request;
+    request["action"] = "add_employee";
+    request["name"] = name;
+    request["role"] = role;
+    request["email"] = email;
+    sendMessage(QJsonDocument(request).toJson(QJsonDocument::Compact));
+}
+
+void NetworkClient::sendGetAllEmployeesRequest() {
+    QJsonObject request;
+    request["action"] = "get_all_employees";
+    sendMessage(QJsonDocument(request).toJson(QJsonDocument::Compact));
+}
+
+void NetworkClient::sendDeleteEmployeeRequest(const QString &name) {
+    QJsonObject request;
+    request["action"] = "delete_employee";
+    request["name"] = name;
+    sendMessage(QJsonDocument(request).toJson(QJsonDocument::Compact));
+}
+
+void NetworkClient::sendEditEmployeeRequest(const QString &oldName, const QString &newName, const QString &newRole) {
+    QJsonObject request;
+    request["action"] = "edit_employee";
+    request["oldName"] = oldName;
+    request["newName"] = newName;
+    request["newRole"] = newRole;
+    sendMessage(QJsonDocument(request).toJson(QJsonDocument::Compact));
 }

@@ -38,10 +38,41 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
 {
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
-        "MainWindow"
+        "MainWindow",
+        "on_btnAddEmployee_clicked",
+        "",
+        "on_btnRefresh_clicked",
+        "on_btnDeleteEmployee_clicked",
+        "on_btnEditEmployee_clicked",
+        "refreshEmployeeTable",
+        "QJsonArray",
+        "employees",
+        "showSuccessMessage",
+        "message",
+        "showErrorMessage"
     };
 
     QtMocHelpers::UintData qt_methods {
+        // Slot 'on_btnAddEmployee_clicked'
+        QtMocHelpers::SlotData<void()>(1, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_btnRefresh_clicked'
+        QtMocHelpers::SlotData<void()>(3, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_btnDeleteEmployee_clicked'
+        QtMocHelpers::SlotData<void()>(4, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_btnEditEmployee_clicked'
+        QtMocHelpers::SlotData<void()>(5, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'refreshEmployeeTable'
+        QtMocHelpers::SlotData<void(const QJsonArray &)>(6, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { 0x80000000 | 7, 8 },
+        }}),
+        // Slot 'showSuccessMessage'
+        QtMocHelpers::SlotData<void(const QString &)>(9, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::QString, 10 },
+        }}),
+        // Slot 'showErrorMessage'
+        QtMocHelpers::SlotData<void(const QString &)>(11, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::QString, 10 },
+        }}),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -63,10 +94,18 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     auto *_t = static_cast<MainWindow *>(_o);
-    (void)_t;
-    (void)_c;
-    (void)_id;
-    (void)_a;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        switch (_id) {
+        case 0: _t->on_btnAddEmployee_clicked(); break;
+        case 1: _t->on_btnRefresh_clicked(); break;
+        case 2: _t->on_btnDeleteEmployee_clicked(); break;
+        case 3: _t->on_btnEditEmployee_clicked(); break;
+        case 4: _t->refreshEmployeeTable((*reinterpret_cast<std::add_pointer_t<QJsonArray>>(_a[1]))); break;
+        case 5: _t->showSuccessMessage((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 6: _t->showErrorMessage((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        default: ;
+        }
+    }
 }
 
 const QMetaObject *MainWindow::metaObject() const
@@ -85,6 +124,18 @@ void *MainWindow::qt_metacast(const char *_clname)
 int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QMainWindow::qt_metacall(_c, _id, _a);
+    if (_id < 0)
+        return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 7)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 7;
+    }
+    if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 7)
+            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
+        _id -= 7;
+    }
     return _id;
 }
 QT_WARNING_POP

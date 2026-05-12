@@ -1,4 +1,5 @@
 #include "networkserver.h"
+#include "requestrouter.h"
 #include <QJsonDocument> // Add this
 #include <QJsonObject>   // Add this
 #include <QJsonParseError> // Add this
@@ -61,74 +62,9 @@ void NetworkServer::onReadyRead()
 
     // 3. Extract the object and check the "action"
     QJsonObject requestObj = jsonDoc.object();
-    QString action = requestObj["action"].toString();
-
-    qDebug() << "[NET INFO] Client requested action:" << action;
 
     // 4. Route the request based on the action
-    if (action == "login_attempt")
-    {
-        QString user = requestObj["username"].toString();
-        QString pass = requestObj["password"].toString();
-
-        qDebug() << "[NET SEC] Attempting login for user:" << user;
-
-        // (Later, we will check these against the SQLite Database!)
-        // For now, just send a structured JSON success response:
-        QJsonObject response;
-        response["action"] = "login_response";
-        response["status"] = "success";
-        response["message"] = "Welcome, Admin!";
-
-        clientSocket->write(QJsonDocument(response).toJson(QJsonDocument::Compact));
-    }
-    else if (action == "add_employee")
-    {
-        QString name = requestObj["name"].toString();
-        QString role = requestObj["role"].toString(); // Luăm rolul trimis de client [cite: 79]
-
-        qDebug() << "[SERVER] Încercăm salvarea angajatului:" << name;
-        bool success = db.addEmployee(name.toLower().replace(" ", "_"), role, name, "Nou");
-
-        QJsonObject response;
-        response["action"] = "add_employee_response";
-        response["status"] = success ? "success" : "error";
-        response["message"] = success ? "Angajat salvat în baza de date!" : "Eroare la salvare în SQLite.";
-
-        clientSocket->write(QJsonDocument(response).toJson(QJsonDocument::Compact));
-    }
-
-    else if (action == "get_all_employees")
-    {
-        QJsonObject response;
-        response["action"] = "employee_list";
-        response["employees"] = db.getAllEmployeesFromDB();
-
-        clientSocket->write(QJsonDocument(response).toJson(QJsonDocument::Compact));
-    }
-
-    else if (action == "delete_employee") {
-        QString name = requestObj["name"].toString();
-        bool success = db.deleteEmployee(name);
-
-        QJsonObject response;
-        response["status"] = success ? "success" : "error";
-        response["message"] = success ? "Angajat șters!" : "Eroare la ștergere.";
-        clientSocket->write(QJsonDocument(response).toJson());
-    }
-
-    else if (action == "edit_employee") {
-        QString oldName = requestObj["oldName"].toString();
-        QString newName = requestObj["newName"].toString();
-        QString newRole = requestObj["newRole"].toString();
-
-        bool success = db.updateEmployee(oldName, newName, newRole);
-
-        QJsonObject response;
-        response["status"] = success ? "success" : "error";
-        response["message"] = success ? "Datele angajatului au fost actualizate!" : "Eroare la update.";
-        clientSocket->write(QJsonDocument(response).toJson());
-    }
+    RequestRouter::processRequest(requestObj, clientSocket, &db);
 
 
 }
