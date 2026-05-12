@@ -1,9 +1,13 @@
 #include "databasemanager.h"
+#include <QJsonObject>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
 #include <QCoreApplication>
 #include <QDir>
+#include <QJsonArray>
+#include <QJsonObject>
+
 DatabaseManager::DatabaseManager() {
 
 
@@ -187,6 +191,57 @@ bool DatabaseManager::createSupplierOperationsTables()
 
     if (!query.exec(supplierSql) || !query.exec(supplierOrderSql) || !query.exec(supplierOrderContainsSql)) {
         qDebug() << "[DB ERROR] Failed to create Supplier Operations tables:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool DatabaseManager::addEmployee(const QString &username, const QString &role, const QString &firstName, const QString &lastName) {
+    QSqlQuery query;
+    query.prepare("INSERT INTO Employee (username, password, first_name, last_name, role) "
+                  "VALUES (:user, :pass, :fname, :lname, :role)");
+    query.bindValue(":user", username);
+    query.bindValue(":pass", "parola_default"); // Ulterior folosim hashing (REQ-284)
+    query.bindValue(":fname", firstName);
+    query.bindValue(":lname", lastName);
+    query.bindValue(":role", role);
+
+    if (!query.exec()) {
+        qDebug() << "[DB ERROR] Failed to add employee:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+QJsonArray DatabaseManager::getAllEmployeesFromDB() {
+    QJsonArray list;
+    QSqlQuery query("SELECT first_name, role FROM Employee");
+
+    while (query.next()) {
+        QJsonObject emp;
+        emp["name"] = query.value(0).toString();
+        emp["role"] = query.value(1).toString();
+        list.append(emp);
+    }
+    return list;
+}
+
+bool DatabaseManager::deleteEmployee(const QString &name) {
+    QSqlQuery query;
+    query.prepare("DELETE FROM Employee WHERE first_name = :name");
+    query.bindValue(":name", name);
+    return query.exec();
+}
+
+bool DatabaseManager::updateEmployee(const QString &oldName, const QString &newName, const QString &newRole) {
+    QSqlQuery query;
+    query.prepare("UPDATE Employee SET first_name = :newName, role = :newRole WHERE first_name = :oldName");
+    query.bindValue(":newName", newName);
+    query.bindValue(":newRole", newRole);
+    query.bindValue(":oldName", oldName);
+
+    if (!query.exec()) {
+        qDebug() << "[DB ERROR] Failed to update employee:" << query.lastError().text();
         return false;
     }
     return true;

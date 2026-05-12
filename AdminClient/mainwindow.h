@@ -18,8 +18,16 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
 
+private slots:
+    void on_btnAddEmployee_clicked();
+    void on_btnRefresh_clicked();
+    void on_btnDeleteEmployee_clicked();
+    void on_btnEditEmployee_clicked();
+    void handleServerResponse(const QString &message);
+
 private:
     Ui::MainWindow *ui;
     NetworkClient *client;
 };
+
 #endif // MAINWINDOW_H

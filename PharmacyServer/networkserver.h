@@ -4,6 +4,7 @@
 #include <QTcpSocket>
 #include <QList>
 #include <QObject>
+#include "databasemanager.h"
 
 class NetworkServer : public QObject
 {
@@ -23,8 +24,8 @@ private slots:
 
 private:
     QTcpServer *server;
-
     QList<QTcpSocket*> clients;
+    DatabaseManager db;
 };
 
 #endif // NETWORKSERVER_H
