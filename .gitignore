@@ -39,3 +39,22 @@
 
 # debug information files
 *.dwo
+
+# Qt Creator temporary files
+*.pro.user
+*.pro.user.*
+.qtcreator/
+
+# Build folders
+build/
+build-*/
+debug/
+release/
+*.exe
+
+# Clang cache
+.qtc_clangd/
+
+# Database files (So you don't overwrite each other's test data!)
+*.db
+*.sqlite3
