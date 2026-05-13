@@ -13,18 +13,98 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTableView" name="tableOrders">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>261</width>
+      <height>192</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnConfirmOrder">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>190</y>
+      <width>81</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Confirm Order</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnUpdateStock">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>190</y>
+      <width>81</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Update Stock</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnRefresh">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>190</y>
+      <width>81</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Refresh</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblAlerts">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>120</y>
+      <width>111</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>System Ready</string>
+    </property>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuStaffClient">
+    <property name="title">
+     <string>Orders</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuInventory">
+    <property name="title">
+     <string>Inventory</string>
+    </property>
+   </widget>
+   <addaction name="menuStaffClient"/>
+   <addaction name="menuInventory"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionOrders">
+   <property name="text">
+    <string>Orders</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
