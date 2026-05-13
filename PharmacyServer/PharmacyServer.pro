@@ -1,5 +1,6 @@
 QT += widgets
 QT += sql core network
+QT += core gui widgets network sql
 QMAKE_LFLAGS += -municode
 win32 {
     CONFIG -= qtmain

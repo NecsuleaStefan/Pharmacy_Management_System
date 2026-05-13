@@ -1,4 +1,6 @@
 QT += widgets
+QT += core gui widgets sql
+QT += core gui widgets network sql
 QMAKE_LFLAGS += -municode
 win32 {
     CONFIG -= qtmain
@@ -12,10 +14,14 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    networkclient.cpp \
+    staffclient.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    networkclient.h \
+    staffclient.h
 
 FORMS += \
     mainwindow.ui

@@ -246,3 +246,54 @@ bool DatabaseManager::updateEmployee(const QString &oldName, const QString &newN
     }
     return true;
 }
+
+// ~~~~~~~~~~~~~~~~~~~~~[StaffClient]~~~~~~~~~~~~~~~~~~~~~
+
+bool DatabaseManager::allocateStockForOrder(int orderId) {
+    // REQ-58: Start a transaction to ensure data integrity
+    if (!db.transaction()) {
+        qDebug() << "[DB ERROR] Could not start transaction";
+        return false;
+    }
+
+    QSqlQuery query;
+    // Note: Using 'Order_Contains' to match your createCustomerOperationsTables() function
+    query.prepare("SELECT medicine_id, quantity FROM Order_Contains WHERE order_id = ?");
+    query.addBindValue(orderId);
+
+    if (!query.exec()) {
+        db.rollback();
+        qDebug() << "[DB ERROR] Failed to fetch order items:" << query.lastError().text();
+        return false;
+    }
+
+    while (query.next()) {
+        int medId = query.value(0).toInt();
+        int qty = query.value(1).toInt();
+
+        // REQ-58: Update 'Medicine' table stock using 'stk_quantity' column
+        QSqlQuery updateQuery;
+        updateQuery.prepare("UPDATE Medicine SET stk_quantity = stk_quantity - ? WHERE medicine_id = ?");
+        updateQuery.addBindValue(qty);
+        updateQuery.addBindValue(medId);
+
+        if (!updateQuery.exec()) {
+            db.rollback(); // Rollback if any single item fails to update
+            qDebug() << "[DB ERROR] Stock update failed for Medicine ID:" << medId << " - " << updateQuery.lastError().text();
+            return false;
+        }
+    }
+
+    // REQ-56: Update the order status to 'Confirmed' or 'Completed'
+    QSqlQuery statusQuery;
+    statusQuery.prepare("UPDATE Customer_Order SET status = 'Confirmed' WHERE order_id = ?");
+    statusQuery.addBindValue(orderId);
+
+    if (!statusQuery.exec()) {
+        db.rollback();
+        return false;
+    }
+
+    qDebug() << "[DB INFO] Stock successfully allocated for Order ID:" << orderId;
+    return db.commit(); // Finalize all changes
+}
