@@ -20,11 +20,11 @@
       <x>0</x>
       <y>0</y>
       <width>280</width>
-      <height>330</height>
+      <height>360</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab_1">
      <attribute name="title">
@@ -33,6 +33,13 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QTableWidget" name="tableEmployees"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnAddEmployee">
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="btnEditEmployee">
@@ -49,13 +56,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnAddEmployee">
-        <property name="text">
-         <string>Add</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="btnRefresh">
         <property name="text">
          <string>Refresh</string>
@@ -66,8 +66,41 @@
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
-      <string>Tab 2</string>
+      <string>Medicines</string>
      </attribute>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QTableWidget" name="tableMedicine"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnAddMedicine">
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnEditMedicine">
+        <property name="text">
+         <string>Edit</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnDeleteMedicine">
+        <property name="text">
+         <string>Delete</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnRefreshInventory">
+        <property name="text">
+         <string>Refresh</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
   </widget>
@@ -77,7 +110,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

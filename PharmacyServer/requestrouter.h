@@ -20,6 +20,10 @@ private:
     static void handleGetAllEmployees(QTcpSocket *clientSocket, DatabaseManager *db);
     static void handleDeleteEmployee(const QJsonObject &requestObj, QTcpSocket *clientSocket, DatabaseManager *db);
     static void handleEditEmployee(const QJsonObject &requestObj, QTcpSocket *clientSocket, DatabaseManager *db);
+    static void handleGetAllMedicines(QTcpSocket *clientSocket, DatabaseManager *db);
+    static void handleAddMedicine(const QJsonObject &requestObj, QTcpSocket *clientSocket, DatabaseManager *db);
+    static void handleDeleteMedicine(const QJsonObject &requestObj, QTcpSocket *clientSocket, DatabaseManager *db);
+    static void handleEditMedicine(const QJsonObject &requestObj, QTcpSocket *clientSocket, DatabaseManager *db);
 
     // --------------------------------------------------------
     // Utility function to stop repeating QJsonDocument code

@@ -69,6 +69,11 @@ void NetworkClient::onReadyRead()
     else if (action == "employee_list") {
         emit employeeListReceived(response["employees"].toArray());
     }
+
+    else if (action == "medicine_list_response") {
+        emit medicineListReceived(response["data"].toArray());
+    }
+
     else {
         // If it's not a login or a list, it's a generic action (add/edit/delete)
         if (status == "success") {
@@ -115,5 +120,40 @@ void NetworkClient::sendEditEmployeeRequest(const QString &oldName, const QStrin
     request["oldName"] = oldName;
     request["newName"] = newName;
     request["newRole"] = newRole;
+    sendMessage(QJsonDocument(request).toJson(QJsonDocument::Compact));
+}
+
+void NetworkClient::sendGetAllMedicinesRequest() {
+    QJsonObject request;
+    request["action"] = "get_all_medicines";
+    sendMessage(QJsonDocument(request).toJson(QJsonDocument::Compact));
+}
+
+
+void NetworkClient::sendAddMedicineRequest(const QString &name, const QString &category, double price, int quantity) {
+    QJsonObject request;
+    request["action"] = "add_medicine";
+    request["name"] = name;
+    request["category"] = category;
+    request["price"] = price;
+    request["quantity"] = quantity;
+    sendMessage(QJsonDocument(request).toJson(QJsonDocument::Compact));
+}
+
+void NetworkClient::sendDeleteMedicineRequest(const QString &name) {
+    QJsonObject request;
+    request["action"] = "delete_medicine";
+    request["name"] = name;
+    sendMessage(QJsonDocument(request).toJson(QJsonDocument::Compact));
+}
+
+void NetworkClient::sendEditMedicineRequest(const QString &oldName, const QString &newName, const QString &cat, double price, int qty) {
+    QJsonObject request;
+    request["action"] = "edit_medicine";
+    request["oldName"] = oldName;
+    request["newName"] = newName;
+    request["category"] = cat;
+    request["price"] = price;
+    request["quantity"] = qty;
     sendMessage(QJsonDocument(request).toJson(QJsonDocument::Compact));
 }
