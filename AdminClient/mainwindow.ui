@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>804</width>
     <height>600</height>
    </rect>
   </property>
@@ -14,102 +14,269 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTabWidget" name="tabWidget">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>280</width>
-      <height>360</height>
-     </rect>
-    </property>
-    <property name="currentIndex">
-     <number>1</number>
-    </property>
-    <widget class="QWidget" name="tab_1">
-     <attribute name="title">
-      <string>Employees</string>
-     </attribute>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QTableWidget" name="tableEmployees"/>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnAddEmployee">
-        <property name="text">
-         <string>Add</string>
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <item>
+     <widget class="QFrame" name="frame">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">    background-color: rgb(0, 170, 0);
+    border-bottom: 3px solid rgb(0, 170, 0);
+    min-height: 50px;</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Shape::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Shadow::Raised</enum>
+      </property>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>280</x>
+         <y>0</y>
+         <width>251</width>
+         <height>53</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: white; font-size: 18px; font-weight: bold;</string>
+       </property>
+       <property name="text">
+        <string>PHARMACY MANAGEMENT</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>640</x>
+         <y>0</y>
+         <width>211</width>
+         <height>53</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: white; font-size: 14px; font-weight: bold;</string>
+       </property>
+       <property name="text">
+        <string>Welcome, Admin!</string>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="styleSheet">
+       <string notr="true">QTabWidget::pane { border: 1px solid #bdc3c7; }
+QTabBar::tab {
+    background: #ecf0f1;
+    padding: 10px 20px;
+    margin-right: 2px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+QTabBar::tab:selected {
+    background: #3498db;
+    color: white;
+}</string>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab_1">
+       <attribute name="title">
+        <string>Employees</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="leftMargin">
+         <number>120</number>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnEditEmployee">
-        <property name="text">
-         <string>Edit</string>
+        <property name="topMargin">
+         <number>50</number>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnDeleteEmployee">
-        <property name="text">
-         <string>Delete</string>
+        <property name="rightMargin">
+         <number>120</number>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnRefresh">
-        <property name="text">
-         <string>Refresh</string>
+        <property name="bottomMargin">
+         <number>20</number>
         </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="tab_2">
-     <attribute name="title">
-      <string>Medicines</string>
-     </attribute>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QTableWidget" name="tableMedicine"/>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnAddMedicine">
-        <property name="text">
-         <string>Add</string>
+        <item>
+         <widget class="QTableWidget" name="tableEmployees">
+          <attribute name="horizontalHeaderStretchLastSection">
+           <bool>true</bool>
+          </attribute>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnAddEmployee">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    background-color: #2ecc71;
+    color: white;
+    border-radius: 4px;
+    font-weight: bold;
+    padding: 5px;
+}
+QPushButton:hover { background-color: #27ae60; }</string>
+          </property>
+          <property name="text">
+           <string>Add</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnEditEmployee">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    background-color: rgb(106, 106, 106);
+    font-weight: bold;
+    color: white;
+    border-radius: 4px;
+	padding: 5px;
+}</string>
+          </property>
+          <property name="text">
+           <string>Edit</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnDeleteEmployee">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    background-color: #e74c3c; 
+    color: white;
+    border-radius: 4px;
+    font-weight: bold;
+    padding: 5px;
+}
+QPushButton:hover { background-color: #c0392b; }</string>
+          </property>
+          <property name="text">
+           <string>Delete</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnRefresh">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    background-color: #3498db; /* Albastru */
+    font-weight : bold;
+    color: white;
+    border-radius: 4px;
+   padding: 5px;
+}</string>
+          </property>
+          <property name="text">
+           <string>Refresh</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Medicines</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="leftMargin">
+         <number>120</number>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnEditMedicine">
-        <property name="text">
-         <string>Edit</string>
+        <property name="topMargin">
+         <number>50</number>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnDeleteMedicine">
-        <property name="text">
-         <string>Delete</string>
+        <property name="rightMargin">
+         <number>120</number>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnRefreshInventory">
-        <property name="text">
-         <string>Refresh</string>
+        <property name="bottomMargin">
+         <number>20</number>
         </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </widget>
+        <item>
+         <widget class="QTableWidget" name="tableMedicine"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnAddMedicine">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    background-color: #2ecc71;
+    color: white;
+    border-radius: 4px;
+    font-weight: bold;
+    padding: 5px;
+}
+QPushButton:hover { background-color: #27ae60; }</string>
+          </property>
+          <property name="text">
+           <string>Add</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnEditMedicine">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    background-color: rgb(106, 106, 106);
+    font-weight: bold;
+    color: white;
+    border-radius: 4px;
+	padding: 5px;
+}</string>
+          </property>
+          <property name="text">
+           <string>Edit</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnDeleteMedicine">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    background-color: #e74c3c; 
+    color: white;
+    border-radius: 4px;
+    font-weight: bold;
+    padding: 5px;
+}
+QPushButton:hover { background-color: #c0392b; }</string>
+          </property>
+          <property name="text">
+           <string>Delete</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnRefreshInventory">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    background-color: #3498db; /* Albastru */
+    font-weight : bold;
+    color: white;
+    border-radius: 4px;
+   padding: 5px;
+}</string>
+          </property>
+          <property name="text">
+           <string>Refresh</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>804</width>
      <height>22</height>
     </rect>
    </property>
