@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "networkclient.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -17,7 +18,19 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
 
+private slots:
+    void on_btnAddEmployee_clicked();
+    void on_btnRefresh_clicked();
+    void on_btnDeleteEmployee_clicked();
+    void on_btnEditEmployee_clicked();
+
+    void refreshEmployeeTable(const QJsonArray &employees);
+    void showSuccessMessage(const QString &message);
+    void showErrorMessage(const QString &message);
+
 private:
     Ui::MainWindow *ui;
+    NetworkClient *client;
 };
+
 #endif // MAINWINDOW_H
