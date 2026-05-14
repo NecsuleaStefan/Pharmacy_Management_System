@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QCoreApplication>
 #include <QDir>
+#include <QCryptographicHash>
 #include <QJsonArray>
 #include <QJsonObject>
 
@@ -245,4 +246,42 @@ bool DatabaseManager::updateEmployee(const QString &oldName, const QString &newN
         return false;
     }
     return true;
+}
+bool DatabaseManager::addCustomer(const QString &username, const QString &password,
+                                  const QString &email, const QString &phone, const QString &address)
+{
+    QSqlQuery query;
+
+    //hashing password
+    QString hashedPass = QString(QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex());
+
+    query.prepare("INSERT INTO Customer (username, password, email, phone, address) "
+                  "VALUES (:user, :pass, :email, :phone, :address)");
+    query.bindValue(":user", username);
+    query.bindValue(":pass", hashedPass);
+    query.bindValue(":email", email);
+    query.bindValue(":phone", phone);
+    query.bindValue(":address", address);
+
+    if (!query.exec()) {
+        qDebug() << "[DB ERROR] Failed to register customer:" << query.lastError().text();
+        return false;
+    }
+    return true;
+
+}
+bool DatabaseManager::authenticateCustomer(const QString &username, const QString &password) {
+    // Scramble the password the user just typed in
+    QString hashedPass = QString(QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex());
+
+    QSqlQuery query;
+    // Check if a row exists with this exact username AND the exact scrambled password
+    query.prepare("SELECT user_id FROM Customer WHERE username = :user AND password = :pass");
+    query.bindValue(":user", username);
+    query.bindValue(":pass", hashedPass);
+
+    if (query.exec() && query.next()) {
+        return true; // found!
+    }
+    return false; // Wrong username or password
 }
