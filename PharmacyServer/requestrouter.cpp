@@ -50,24 +50,27 @@ void RequestRouter::processRequest(const QJsonObject &requestObj, QTcpSocket *cl
 // SPECIFIC HANDLERS
 // ==========================================
 
-void RequestRouter::handleLogin(const QJsonObject &requestObj, QTcpSocket *clientSocket, DatabaseManager *db)
-{
+
+void RequestRouter::handleLogin(const QJsonObject &requestObj, QTcpSocket *clientSocket, DatabaseManager *db) {
     QString user = requestObj["username"].toString();
     QString pass = requestObj["password"].toString();
-    QString role;
+
+    // Apelăm funcția creată la Pasul 1
+    QString role = db->authenticateUser(user, pass);
 
     QJsonObject response;
     response["action"] = "login_response";
 
-
-    /*if (db->authenticateEmployee(user, pass, role)) {
+    if (!role.isEmpty()) {
         response["status"] = "success";
-        response["message"] = "Welcome, " + user + "!";
-        response["role"] = role;
+        response["role"] = role; // "admin", "staff" sau "customer"
+        qDebug() << "[AUTH] Login reușit pentru:" << user << "cu rolul:" << role;
     } else {
         response["status"] = "error";
-        response["message"] = "Invalid username or password.";
-    } */
+        response["message"] = "Utilizator sau parolă incorectă!";
+        qDebug() << "[AUTH] Login eșuat pentru:" << user;
+    }
+
     sendResponse(clientSocket, response);
 }
 

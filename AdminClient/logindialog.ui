@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LoginDialog</class>
+ <widget class="QDialog" name="LoginDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>832</width>
+    <height>519</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* Fundalul ferestrei */
+QDialog {
+    background-color: #f8f9fa;
+}
+
+/* Stil pentru campurile de text */
+QLineEdit {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    background-color: white;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+QLineEdit:focus {
+    border: 2px solid #2ecc71; /* Verdele tau de la Admin */
+}
+
+/* Butonul de Login */
+QPushButton#btnLogin {
+    background-color: #2ecc71;
+    color: white;
+    border-radius: 6px;
+    font-weight: bold;
+    padding: 12px;
+    font-size: 14px;
+}
+
+QPushButton#btnLogin:hover {
+    background-color: #27ae60;
+}
+
+/* Mesajul de eroare sub buton */
+QLabel#lblError {
+    color: #e74c3c;
+    font-size: 12px;
+    font-weight: bold;
+}</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>30</y>
+     <width>461</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    color: #27ae60; /* Verdele tău de la Admin */
+    font-size: 22px;
+    font-weight: bold;
+    font-family: &quot;Segoe UI&quot;, sans-serif;
+    background: transparent;
+}</string>
+   </property>
+   <property name="text">
+    <string>Pharmacy Management System - LOGIN</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="editUsername">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>180</y>
+     <width>211</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>Utilizator</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="editPassword">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>230</y>
+     <width>211</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>Parola</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnLogin">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>290</y>
+     <width>111</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Login</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lblError">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>380</y>
+     <width>251</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    color: #e74c3c; /* Roșu de eroare */
+    font-size: 13px;
+    font-style: italic;
+    background: transparent;
+}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

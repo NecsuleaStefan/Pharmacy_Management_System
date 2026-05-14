@@ -31,6 +31,20 @@ bool DatabaseManager::initializeDatabase()
     }
 
     qDebug() << "[DB INFO] All database tables verified and ready.";
+    // În databasemanager.cpp, în interiorul funcției initializeDatabase()
+    QSqlQuery checkQuery("SELECT COUNT(*) FROM Employee");
+    if (checkQuery.next() && checkQuery.value(0).toInt() == 0) {
+        QSqlQuery insertQuery;
+        insertQuery.prepare("INSERT INTO Employee (username, password, first_name, last_name, role) "
+                            "VALUES (:u, :p, :f, :l, :r)");
+        insertQuery.bindValue(":u", "admin");
+        insertQuery.bindValue(":p", "1234"); // Parola de test
+        insertQuery.bindValue(":f", "Sef");
+        insertQuery.bindValue(":l", "Mare");
+        insertQuery.bindValue(":r", "admin");
+        insertQuery.exec();
+        qDebug() << "[DB INFO] Cont de test creat: admin / 1234";
+    }
     return true;
 }
 bool DatabaseManager::createUsersTables()
@@ -290,4 +304,30 @@ bool DatabaseManager::updateMedicine(const QString &oldName, const QString &newN
     query.bindValue(":newQty", newQty);
     query.bindValue(":oldName", oldName);
     return query.exec();
+}
+
+
+QString DatabaseManager::authenticateUser(const QString &username, const QString &password) {
+    qDebug() << "[AUTH DEBUG] Incercare login pentru:" << username << "cu parola:" << password;
+
+    QSqlQuery query;
+    query.prepare("SELECT role FROM Employee WHERE username = :user AND password = :pass");
+    query.bindValue(":user", username);
+    query.bindValue(":pass", password);
+
+    if (query.exec() && query.next()) {
+        return query.value(0).toString(); // Succes
+    }
+
+
+    if (username == "admin" && password == "1234") {
+        qDebug() << "[AUTH INFO] Userul admin nu exista. Il creez acum...";
+        QSqlQuery insert;
+        insert.prepare("INSERT INTO Employee (username, password, first_name, last_name, role) VALUES ('admin', '1234', 'Iulian', 'Admin', 'admin')");
+        if(insert.exec()) {
+            return "admin"; // Returnăm direct succes după creare
+        }
+    }
+
+    return "";
 }

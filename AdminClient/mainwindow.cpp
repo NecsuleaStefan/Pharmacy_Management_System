@@ -20,9 +20,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainW
     client->connectToServer("127.0.0.1", 8080);
 
 
-   /* QTimer::singleShot(100, this, [this]() {
-        // client->sendLoginRequest("admin_user", "secret123");
-    }); */
+    QTimer::singleShot(100, this, [this]() {
+        client->sendLoginRequest("admin", "1234");
+    });
 }
 
 MainWindow::~MainWindow()

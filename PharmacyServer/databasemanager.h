@@ -16,7 +16,7 @@ public:
     DatabaseManager();
     bool initializeDatabase();
 
-
+    QString authenticateUser(const QString &username, const QString &password);
     QJsonArray getAllEmployeesFromDB();
     QJsonArray getAllMedicinesFromDB();
 
