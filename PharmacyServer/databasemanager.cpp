@@ -246,3 +246,48 @@ bool DatabaseManager::updateEmployee(const QString &oldName, const QString &newN
     }
     return true;
 }
+
+QJsonArray DatabaseManager::getAllMedicinesFromDB() {
+    QJsonArray list;
+    QSqlQuery query("SELECT name, category, price, stk_quantity FROM Medicine");
+    while (query.next()) {
+        QJsonObject med;
+        med["name"] = query.value(0).toString();
+        med["category"] = query.value(1).toString();
+        med["price"] = query.value(2).toDouble();
+        med["quantity"] = query.value(3).toInt();
+        list.append(med);
+    }
+    return list;
+}
+
+bool DatabaseManager::addMedicine(const QString &name, const QString &category, double price, int quantity) {
+    QSqlQuery query;
+    query.prepare("INSERT INTO Medicine (name, category, price, stk_quantity) "
+                  "VALUES (:name, :cat, :price, :qty)");
+    query.bindValue(":name", name);
+    query.bindValue(":cat", category);
+    query.bindValue(":price", price);
+    query.bindValue(":qty", quantity);
+    return query.exec();
+}
+
+
+bool DatabaseManager::deleteMedicine(const QString &name) {
+    QSqlQuery query;
+    query.prepare("DELETE FROM Medicine WHERE name = :name");
+    query.bindValue(":name", name);
+    return query.exec();
+}
+
+
+bool DatabaseManager::updateMedicine(const QString &oldName, const QString &newName, const QString &newCat, double newPrice, int newQty) {
+    QSqlQuery query;
+    query.prepare("UPDATE Medicine SET name = :newName, category = :newCat, price = :newPrice, stk_quantity = :newQty WHERE name = :oldName");
+    query.bindValue(":newName", newName);
+    query.bindValue(":newCat", newCat);
+    query.bindValue(":newPrice", newPrice);
+    query.bindValue(":newQty", newQty);
+    query.bindValue(":oldName", oldName);
+    return query.exec();
+}

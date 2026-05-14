@@ -18,6 +18,11 @@ public:
     void sendGetAllEmployeesRequest();
     void sendDeleteEmployeeRequest(const QString &name);
     void sendEditEmployeeRequest(const QString &oldName, const QString &newName, const QString &newRole);
+    void sendGetAllMedicinesRequest();
+    void sendAddMedicineRequest(const QString &name, const QString &category, double price, int quantity);
+    void sendDeleteMedicineRequest(const QString &name);
+    void sendEditMedicineRequest(const QString &oldName, const QString &newName, const QString &cat, double price, int qty);
+
 
 signals:
     void loginSuccess(const QString &role);
@@ -25,6 +30,7 @@ signals:
     void employeeListReceived(const QJsonArray &employees);
     void actionSuccess(const QString &message);
     void actionFailed(const QString &errorMessage);
+    void medicineListReceived(const QJsonArray &medicines);
 
 private slots:
 void onReadyRead();

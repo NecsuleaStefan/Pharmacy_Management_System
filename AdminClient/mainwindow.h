@@ -23,8 +23,14 @@ private slots:
     void on_btnRefresh_clicked();
     void on_btnDeleteEmployee_clicked();
     void on_btnEditEmployee_clicked();
+    void on_btnRefreshInventory_clicked();
+    void on_btnAddMedicine_clicked();
+    void on_btnDeleteMedicine_clicked();
+    void on_btnEditMedicine_clicked();
 
     void refreshEmployeeTable(const QJsonArray &employees);
+    void refreshMedicineTable(const QJsonArray &medicines);
+
     void showSuccessMessage(const QString &message);
     void showErrorMessage(const QString &message);
 
