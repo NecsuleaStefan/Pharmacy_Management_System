@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
 #include <QMainWindow>
+#include <networkclient.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,5 +19,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    NetworkClient *client;
 };
 #endif // MAINWINDOW_H

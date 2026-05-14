@@ -20,6 +20,8 @@ private:
     static void handleGetAllEmployees(QTcpSocket *clientSocket, DatabaseManager *db);
     static void handleDeleteEmployee(const QJsonObject &requestObj, QTcpSocket *clientSocket, DatabaseManager *db);
     static void handleEditEmployee(const QJsonObject &requestObj, QTcpSocket *clientSocket, DatabaseManager *db);
+    static void handleRegisterCustomer(const QJsonObject &requestObj, QTcpSocket *clientSocket, DatabaseManager *db);
+    static void handleCustomerLogin(const QJsonObject &requestObj, QTcpSocket *clientSocket, DatabaseManager *db);
     static void handleGetAllMedicines(QTcpSocket *clientSocket, DatabaseManager *db);
     static void handleAddMedicine(const QJsonObject &requestObj, QTcpSocket *clientSocket, DatabaseManager *db);
     static void handleDeleteMedicine(const QJsonObject &requestObj, QTcpSocket *clientSocket, DatabaseManager *db);
