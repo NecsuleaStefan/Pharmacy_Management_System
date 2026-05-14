@@ -1,5 +1,6 @@
 #include <QMessageBox>
 #include "mainwindow.h"
+#include "qjsonarray.h"
 #include "ui_mainwindow.h"
 #include "networkclient.h"
 
@@ -80,8 +81,58 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
         QMessageBox::warning(this, "Login Failed", err);
     });
 
-}
+    // 1. Menu -> Storefront
+    connect(ui->btnGoToStore, &QPushButton::clicked, this, [this]() {
+        ui->stackedWidget->setCurrentIndex(3);
 
+        client->sendGetAllMedicinesRequest();
+    });
+
+    //btn sends from store to menu page
+    connect(ui->FromStoretoMenuBtn, &QPushButton::clicked, this, [this]() {
+        ui->stackedWidget->setCurrentIndex(2);
+    });
+
+    connect(client, &NetworkClient::medicineListReceived, this, &MainWindow::populateStorefront);
+
+    connect(ui->medicineRefreshBtn, &QPushButton::clicked, this, [this]() {
+        client->sendGetAllMedicinesRequest();
+    });
+
+}
+void MainWindow::populateStorefront(const QJsonArray &medicines) {
+    // Clear the list before adding new items
+    ui->listMedicines->clear();
+
+    for (int i = 0; i < medicines.size(); ++i) {
+        QJsonObject med = medicines[i].toObject();
+
+        QString name = med["name"].toString();
+        QString category = med["category"].toString();
+        double price = med["price"].toDouble();
+        int qty = med["stk_quantity"].toInt();
+
+        // Format it nicely for the customer
+        QString displayString = QString("%1\nCategory: %2 | Price: $%3 | In Stock: %4")
+                                    .arg(name)
+                                    .arg(category)
+                                    .arg(price, 0, 'f', 2)
+                                    .arg(qty);
+
+        // Create the UI Item
+        QListWidgetItem *item = new QListWidgetItem(displayString);
+
+        // Make the row slightly taller so it looks like a nice card
+        item->setSizeHint(QSize(0, 60));
+
+        // Change the font of the item
+        QFont font = item->font();
+        font.setPointSize(11);
+        item->setFont(font);
+
+        ui->listMedicines->addItem(item);
+    }
+}
 MainWindow::~MainWindow()
 {
     delete ui;

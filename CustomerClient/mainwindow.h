@@ -20,5 +20,8 @@ public:
 private:
     Ui::MainWindow *ui;
     NetworkClient *client;
+
+private slots:
+    void populateStorefront(const QJsonArray &medicines);
 };
 #endif // MAINWINDOW_H

@@ -1,4 +1,5 @@
 #include "networkclient.h"
+#include "qjsonarray.h"
 #include <QJsonParseError>
 #include <QDebug>
 
@@ -48,6 +49,12 @@ void NetworkClient::sendLoginRequest(const QString &username, const QString &pas
     sendMessage(request);
 }
 
+void NetworkClient::sendGetAllMedicinesRequest() {
+    QJsonObject request;
+    request["action"] = "get_all_medicines";
+    sendMessage(request);
+}
+
 void NetworkClient::onReadyRead() {
     QByteArray data = m_socket->readAll();
     QJsonParseError error;
@@ -67,5 +74,9 @@ void NetworkClient::onReadyRead() {
     else if (action == "customer_login_response") {
         if (status == "success") emit loginSuccess(message);
         else emit loginFailed(message);
+    }
+    else if(action == "medicine_list_response")
+    {
+        emit medicineListReceived(response["data"].toArray());
     }
 }

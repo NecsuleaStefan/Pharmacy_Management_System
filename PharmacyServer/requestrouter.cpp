@@ -147,7 +147,7 @@ void RequestRouter::handleGetAllMedicines(QTcpSocket *clientSocket, DatabaseMana
     response["action"] = "medicine_list_response";
     response["data"] = db->getAllMedicinesFromDB();
     response["status"] = "success";
-    sendResponse(clientSocket, response); // Folosim helper-ul de capsulare
+    sendResponse(clientSocket, response);
 }
 
 void RequestRouter::handleAddMedicine(const QJsonObject &requestObj, QTcpSocket *clientSocket, DatabaseManager *db) {

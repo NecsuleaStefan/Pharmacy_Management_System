@@ -19,12 +19,16 @@ public:
 
     void sendLoginRequest(const QString &username, const QString &password);
 
+    void sendGetAllMedicinesRequest();
+
 signals:
     void registrationSuccess(const QString &message);
     void registrationFailed(const QString &errorMessage);
 
     void loginSuccess(const QString &message);
     void loginFailed(const QString &errorMessage);
+
+    void medicineListReceived(const QJsonArray &medicines);
 
 private slots:
     void onReadyRead();
