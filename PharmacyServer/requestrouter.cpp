@@ -26,6 +26,7 @@ void RequestRouter::processRequest(const QJsonObject &requestObj, QTcpSocket *cl
     }
     else if (action == "customer_login") {
         handleCustomerLogin(requestObj, clientSocket, db);
+    }
     else if (action == "get_all_medicines") {
         handleGetAllMedicines(clientSocket, db);
     }

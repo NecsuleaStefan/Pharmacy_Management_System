@@ -284,6 +284,7 @@ bool DatabaseManager::authenticateCustomer(const QString &username, const QStrin
         return true; // found!
     }
     return false; // Wrong username or password
+}
 
 QJsonArray DatabaseManager::getAllMedicinesFromDB() {
     QJsonArray list;
@@ -319,7 +320,7 @@ bool DatabaseManager::deleteMedicine(const QString &name) {
 }
 
 
-bool DatabaseManager::updateMedicine(const QString &oldName, const QString &newName, const QString &newCat, double newPrice, int newQty) {
+bool DatabaseManager::updateMedicine(const QString &oldName, const QString &newName, const QString &newCat, double newPrice, int newQty){
     QSqlQuery query;
     query.prepare("UPDATE Medicine SET name = :newName, category = :newCat, price = :newPrice, stk_quantity = :newQty WHERE name = :oldName");
     query.bindValue(":newName", newName);
